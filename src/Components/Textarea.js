@@ -5,28 +5,32 @@ export const Textarea = (props) => {
 
   const toUpper = () => {
     const upText = text.toUpperCase();
-    props.showAlert("Converted To Uppercase", "success");
+    if (text.length > 0) {
+      props.showAlert("Converted To Uppercase", "success");
+      props.removeAlert();
+    }
 
     setText(upText);
-    props.removeAlert();
   };
 
   const toLower = () => {
     const lowerText = text.toLowerCase();
 
     setText(lowerText);
-    props.showAlert("Converted To Lowercase", "success");
-
-    props.removeAlert();
+    if (text.length > 0) {
+      props.showAlert("Converted To Lowercase", "success");
+      props.removeAlert();
+    }
   };
 
   const extraSpace = () => {
     const removeSpace = text.split(/[  ]+/);
     setText(removeSpace.join(" "));
+    if (text.length > 0) {
+      props.showAlert("Extra space has been removed", "success");
 
-    props.showAlert("Extra space has been removed", "success");
-
-    props.removeAlert();
+      props.removeAlert();
+    }
   };
 
   const textChange = (event) => {
@@ -34,18 +38,17 @@ export const Textarea = (props) => {
   };
 
   const textTrim = text.trim();
-  const word = textTrim.split(" ");
+  const word = textTrim.split(/\s+/);
 
   const filterWord = word.filter((element) => {
     return element !== "";
   });
 
   const copyText = () => {
-    const copy = document.getElementById("Textarea");
-    copy.select();
-
-    navigator.clipboard.writeText(copy.value);
+    navigator.clipboard.writeText(text);
     props.showAlert("coppid clipboard", "success");
+
+    document.getSelection().removeAllRanges();
 
     props.removeAlert();
   };
@@ -58,15 +61,17 @@ export const Textarea = (props) => {
       >
         <h2>{props.title}</h2>
         <textarea
-          className="form-control  my-3"
+          className="form-control h1 my-3"
           id="Textarea"
           rows="8"
           placeholder="Enter The Text Here"
           value={text}
           onChange={textChange}
+          style={{ fontSize: "1.4rem" }}
         ></textarea>
 
         <button
+          disabled={text.length === 0}
           type="button"
           className="btn btn-primary my-1"
           onClick={toUpper}
@@ -75,6 +80,7 @@ export const Textarea = (props) => {
         </button>
 
         <button
+          disabled={text.length === 0}
           type="button"
           className="btn btn-primary mx-3 my-1"
           onClick={toLower}
@@ -83,6 +89,7 @@ export const Textarea = (props) => {
         </button>
 
         <button
+          disabled={text.length === 0}
           type="button"
           className="btn btn-primary my-1"
           onClick={copyText}
@@ -91,6 +98,7 @@ export const Textarea = (props) => {
         </button>
 
         <button
+          disabled={text.length === 0}
           type="button"
           className="btn btn-primary mx-3 my-1"
           onClick={extraSpace}

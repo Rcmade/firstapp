@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 
-// import { BrowserRouter as Router, Route , Switch} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import { Navbar } from "./Components/Navbar";
 import Alert from "./Components/Alert";
+import About from "./Components/About";
 import { Textarea } from "./Components/Textarea";
+
 function App() {
   const [darkMode, setDarkMode] = useState("light");
   const [darkText, setDarkText] = useState("Enable Dark Mode");
@@ -22,7 +24,15 @@ function App() {
     }, 4000);
   };
 
-  const toggleMode = () => {
+  const removeBodyClass = () => {
+    document.body.classList.remove("bg-danger");
+    document.body.classList.remove("bg-primary");
+    document.body.classList.remove("bg-success");
+  };
+
+  const toggleMode = (cls) => {
+    removeBodyClass();
+    document.body.classList.add("bg-" + cls);
     if (darkMode === "light") {
       document.body.style.backgroundColor = "#000020";
       setDarkMode("dark");
@@ -42,7 +52,7 @@ function App() {
 
   return (
     <>
-     {/*  <Router> */}
+      <Router>
         <Navbar
           title="THE TEXTAREA"
           about="About"
@@ -52,21 +62,22 @@ function App() {
         />
         <Alert alert={alert} />
 
-        {/* <Switch>
+        <Switch>
           <Route exact path="/about">
-            <About />
-          </Route> */}
+            <About darkMode={darkMode} />
+          </Route>
 
-         { /* <Route  path="/"> */}
+          <Route path="/">
             <Textarea
               title="Enter Your Text"
               darkMode={darkMode}
               showAlert={showAlert}
               removeAlert={removeAlert}
+              alert={alert}
             />
-        { /*  </Route> */}
-       {/*  </Switch> */}
-     {/*  </Router> */}
+          </Route>
+        </Switch>
+      </Router>
     </>
   );
 }

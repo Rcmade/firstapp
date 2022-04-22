@@ -1,5 +1,6 @@
 import React from "react";
 import Proptypes from "prop-types";
+import { Link } from "react-router-dom";
 
 export const Navbar = (props) => {
   return (
@@ -8,9 +9,9 @@ export const Navbar = (props) => {
         className={`navbar navbar-expand-lg navbar-${props.darkMode} bg-${props.darkMode}`}
       >
         <div className="container-fluid">
-          <a className="navbar-brand" href="/">
+          <Link className="navbar-brand" to="/">
             {props.title}
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -25,14 +26,14 @@ export const Navbar = (props) => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="/">
+                <Link className="nav-link active" aria-current="page" to="/">
                   Home
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/">
+                <Link className="nav-link" to="/about">
                   {props.about}
-                </a>
+                </Link>
               </li>
 
               <li className="nav-item mx-1 my-2">
@@ -42,14 +43,45 @@ export const Navbar = (props) => {
                     type="checkbox"
                     role="switch"
                     id="flexSwitchCheckChecked"
-                    onClick={props.toggleMode}
+                    onClick={()=>{props.toggleMode(null)}}
                   />
                   <label
                     className="form-check-label"
                     htmlFor="flexSwitchCheckChecked"
+                    style={{
+                      color: props.darkMode === "light" ? "#000" : "#fff",
+                    }}
                   >
                     {props.darkText}
                   </label>
+                </div>
+              </li>
+
+              <li>
+                <div className="d-flex my-1">
+                  <div
+                    className="bg-primary rounded mx-2"
+                    style={{ height: "30px", width: "30px", cursor: "pointer" }}
+                    onClick={() => {
+                      props.toggleMode("primary");
+                    }}
+                  ></div>
+
+                  <div
+                    className="bg-danger rounded mx-2"
+                    style={{ height: "30px", width: "30px", cursor: "pointer" }}
+                    onClick={() => {
+                      props.toggleMode("danger");
+                    }}
+                  ></div>
+
+                  <div
+                    className="bg-success rounded mx-2"
+                    style={{ height: "30px", width: "30px", cursor: "pointer" }}
+                    onClick={() => {
+                      props.toggleMode("success");
+                    }}
+                  ></div>
                 </div>
               </li>
             </ul>
