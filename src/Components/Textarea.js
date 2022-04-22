@@ -67,7 +67,7 @@ export const Textarea = (props) => {
           placeholder="Enter The Text Here"
           value={text}
           onChange={textChange}
-          style={{ fontSize: "1.4rem" }}
+          style={{ fontSize: "1.5rem" }}
         ></textarea>
 
         <button
